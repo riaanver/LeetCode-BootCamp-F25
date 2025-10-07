@@ -28,6 +28,8 @@ public:
     }
 };
 
+// Problem 2
+
 class Solution2 {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
@@ -48,6 +50,8 @@ public:
         return answer;
     }
 };
+
+//Problem 3
 
 class Solution3 {
 public:
@@ -116,4 +120,5 @@ int main() {
     cout << endl;
 
     return 0;
+
 }
