@@ -1,0 +1,90 @@
+// SOLUTION 1
+
+class Solution {
+public:
+    int myAtoi(string s) {
+        int i = 0;
+        int n = s.length();
+        int sign = 1;
+        long num = 0;
+
+        while (i < n && s[i] == ' ') {i++;}
+
+        if (i < n && (s[i] == '+' || s[i] == '-')) {
+            sign = (s[i] == '-') ? -1 : 1;
+            i++;
+        }
+
+        while (i < n && isdigit(s[i])) {
+            int digit = s[i] - '0';
+
+            if (num > ((INT_MAX-digit) / 10)) {
+                return (sign == 1) ? INT_MAX : INT_MIN;
+            }
+
+            num = num * 10 + digit;
+            i++;
+        }
+
+        return (num * sign);
+    }
+};
+
+// SOLUTION 2
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> res;
+        int S = s.length();
+        int P = p.length();
+
+        if (S < P) {return res;}
+
+        vector<int> patternCount(26, 0);
+        for (char& ch : p) {
+            patternCount[ch - 'a']++;
+        }
+
+        vector<int> windowCount(26, 0);
+        for (int i = 0; i < P-1; i++) {
+            windowCount[s[i] - 'a']++;
+        }
+
+        for (int i = P-1; i < S; i++) {
+            windowCount[s[i] - 'a']++;
+
+            if (windowCount == patternCount) {
+                res.push_back(i - P + 1);
+            }
+
+            windowCount[s[i - P + 1] - 'a']--;
+        }
+
+        return res;
+    }
+};
+
+// SOLUTION 3
+// Found it easier to do in Python
+
+class Solution(object):
+    def reverseWords(self, s):
+        
+        words = []
+        i = 0
+        n = len(s)
+
+        while i < n:
+            while i < n and s[i] == " ":
+                i +=1
+
+            if i < n:
+                start = i
+
+                while i < n and s[i] != " ":
+                    i += 1
+
+                words.append(s[start:i])
+
+        return " ".join(words[::-1])
