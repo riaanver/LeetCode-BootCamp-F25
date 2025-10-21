@@ -5,7 +5,6 @@ public:
     bool isPalindrome(ListNode* head) {
         if (!head || !head->next) return true;
 
-        // Step 1: Find middle (slow will be at midpoint)
         ListNode* slow = head;
         ListNode* fast = head;
         while (fast && fast->next) {
@@ -13,7 +12,6 @@ public:
             fast = fast->next->next;
         }
 
-        // Step 2: Reverse second half
         ListNode* prev = nullptr;
         ListNode* curr = slow;
         while (curr) {
@@ -23,9 +21,8 @@ public:
             curr = nextNode;
         }
 
-        // Step 3: Compare first and second halves
         ListNode* left = head;
-        ListNode* right = prev; // start of reversed half
+        ListNode* right = prev;
         while (right) {
             if (left->val != right->val) return false;
             left = left->next;
@@ -43,7 +40,6 @@ public:
     void reorderList(ListNode* head) {
         if (!head || !head->next) return;
 
-        // Step 1: Find the middle
         ListNode* slow = head;
         ListNode* fast = head;
         while (fast && fast->next) {
@@ -51,10 +47,9 @@ public:
             fast = fast->next->next;
         }
 
-        // Step 2: Reverse the second half
         ListNode* prev = nullptr;
         ListNode* curr = slow->next;
-        slow->next = nullptr; // split the list into two halves
+        slow->next = nullptr;
         while (curr) {
             ListNode* nextNode = curr->next;
             curr->next = prev;
@@ -62,7 +57,6 @@ public:
             curr = nextNode;
         }
 
-        // Step 3: Merge the two halves
         ListNode* first = head;
         ListNode* second = prev;
         while (second) {
@@ -89,13 +83,11 @@ public:
         bool firstRowZero = false;
         bool firstColZero = false;
 
-        // Step 1: Check if first row or first column have any zeros
         for (int i = 0; i < m; i++)
             if (matrix[i][0] == 0) firstColZero = true;
         for (int j = 0; j < n; j++)
             if (matrix[0][j] == 0) firstRowZero = true;
 
-        // Step 2: Use first row/col to mark zero rows/cols
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
@@ -105,7 +97,6 @@ public:
             }
         }
 
-        // Step 3: Set zeroes based on markers
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][0] == 0 || matrix[0][j] == 0) {
@@ -114,7 +105,6 @@ public:
             }
         }
 
-        // Step 4: Handle first row and first column separately
         if (firstRowZero) {
             for (int j = 0; j < n; j++) matrix[0][j] = 0;
         }
