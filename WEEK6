@@ -1,0 +1,23 @@
+#QUESTION 1
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
+            return root
+
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        if left and right:
+            return root
+
+        return left if left else right
+
+#QUESTION 2
+from collections import Counter
+import heapq
+
+class Solution:
+    def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+        count = Counter(nums)
+
+        return [item for item, freq in heapq.nlargest(k, count.items(), key=lambda x: x[1])]
