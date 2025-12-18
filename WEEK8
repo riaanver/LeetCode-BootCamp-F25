@@ -1,0 +1,58 @@
+// problem 1
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int total = 0;
+        for (int x : nums) total += x;
+        
+        if (total % 2 != 0) return false;
+        
+        int target = total / 2;
+        vector<bool> dp(target + 1, false);
+        dp[0] = true;
+        
+        for (int num : nums) {
+            for (int s = target; s >= num; s--) {
+                dp[s] = dp[s] || dp[s - num];
+            }
+        }
+        
+        return dp[target];
+    }
+};
+
+// problem 2
+
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount + 1, amount + 1);
+        dp[0] = 0;
+
+        for (int coin : coins) {
+            for (int x = coin; x <= amount; x++) {
+                dp[x] = min(dp[x], dp[x - coin] + 1);
+            }
+        }
+
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+};
+
+// problem 3
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int cur = nums[0];
+        int best = nums[0];
+
+        for (int i = 1; i < nums.size(); i++) {
+            cur = max(nums[i], cur + nums[i]);
+            best = max(best, cur);
+        }
+
+        return best;
+    }
+};
